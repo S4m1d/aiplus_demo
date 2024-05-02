@@ -4,12 +4,24 @@
 - database named *aiplus* is present in postgresql
 ## Build and run
 ### Using docker
-build
+- build
 `sudo docker build -t aiplus_demo .`
-run image
+- run image
 `docker run -p 8080:8080 --network="host" aiplus_demo`
 ### Using real machine
-build
+- build
 `go build`
-run executable
+- run executable
 `./aiplus_demo`
+## Test
+POST /employees
+ body:
+```json
+{
+    "firstName":"John",
+    "middleName":"Johnovich",
+    "lastName":"Doe",
+    "phoneNumber":"88005553535",
+    "city":"Bishkek"
+}
+```
