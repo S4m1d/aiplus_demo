@@ -2,6 +2,8 @@
 - docker installed
 - postgresql installed and running on localhost:5432
 - database named *aiplus* is present in postgresql
+- repository clonned
+- IMPORTANT: you added your own .env file into root directory of this project and enriched it in respect with .env.example file
 ## Build and run
 ### Using docker
 - build
