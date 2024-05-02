@@ -34,7 +34,7 @@ func (ev SimpleEmployeeValidator) Validate(empl da.Employee) error {
 const validNameDecription = "field must be non empty and start with capital letter"
 
 func isValidName(name string) (bool, string) {
-	return len(name) == 0 || !unicode.IsUpper([]rune(name)[0]), validNameDecription
+	return len(name) != 0 && unicode.IsUpper([]rune(name)[0]), validNameDecription
 }
 
 func (ev SimpleEmployeeValidator) isValidPhoneNumber(number string) (bool, string) {
