@@ -15,7 +15,10 @@ type ValidationError struct {
 }
 
 func NewValidationError(target, reason string) error {
-	return &ValidationError{}
+	return &ValidationError{
+		Target: target,
+		Reason: reason,
+	}
 }
 
 func (e ValidationError) Error() string {
