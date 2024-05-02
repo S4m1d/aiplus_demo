@@ -20,6 +20,12 @@ func OnInit(logger zerolog.Logger) error {
 		log.Error().Err(err).Msg(onInitErrMsg)
 		return errors.New(onInitErrMsg)
 	}
+	err = initDb(db)
+	if err != nil {
+		log.Error().Err(err).Msg(onInitErrMsg)
+		return errors.New(onInitErrMsg)
+	}
+
 	Db = &SimpleWrapperSqlDb{
 		db: db,
 	}

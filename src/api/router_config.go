@@ -8,10 +8,15 @@ import (
 
 const addr = "localhost:8080"
 
-func ConfigureRoutes() {
+func ConfigureRoutes() error {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/employees", HandlePostEmployeesData).Methods("POST")
 
-	http.ListenAndServe(addr, router)
+	err := http.ListenAndServe(addr, router)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
