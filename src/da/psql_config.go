@@ -9,6 +9,8 @@ import (
 	_ "github.com/lib/pq"
 )
 
+const dbConnErrMsg = "failed to connect to psql db"
+
 // todo add creation of table if it doesn't exist
 func connectToPostgreSql() (*sql.DB, error) {
 	connStr := fmt.Sprintf(
@@ -21,8 +23,10 @@ func connectToPostgreSql() (*sql.DB, error) {
 
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
-		return nil, err
+		log.Error().Err(err).Msg(dbConnErrMsg)
+		return nil, errors.New(dbConnErrMsg)
 	}
+	log.Info().Msg("connected to postgre")
 
 	return db, nil
 }
@@ -48,7 +52,7 @@ func createEmployeesTableIfNeed(db *sql.DB) error {
 		middleName VARCHAR(20),
 		lastName VARCHAR(20),
 		phoneNumber VARCHAR(11) UNIQUE,
-		city	VARCHAR(20),
+		city	VARCHAR(20)
 		);`,
 	)
 	if err != nil {
@@ -56,5 +60,6 @@ func createEmployeesTableIfNeed(db *sql.DB) error {
 		log.Error().Err(err).Msg(errMsg)
 		return errors.New(errMsg)
 	}
+	log.Info().Msg("initialized employee table")
 	return nil
 }

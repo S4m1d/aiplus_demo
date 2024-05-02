@@ -13,12 +13,15 @@ var EmployeeRepo SqlEmployeeRepository
 const onInitErrMsg = "failed to init module da"
 
 func OnInit(logger zerolog.Logger) error {
-	logger = log
+	log = logger
 	var err error
 	db, err := connectToPostgreSql()
 	if err != nil {
 		log.Error().Err(err).Msg(onInitErrMsg)
 		return errors.New(onInitErrMsg)
+	}
+	Db = &SimpleWrapperSqlDb{
+		db: db,
 	}
 	err = initDb(db)
 	if err != nil {
@@ -26,9 +29,6 @@ func OnInit(logger zerolog.Logger) error {
 		return errors.New(onInitErrMsg)
 	}
 
-	Db = &SimpleWrapperSqlDb{
-		db: db,
-	}
 	initEmployeeRepo()
 
 	return nil
@@ -39,5 +39,7 @@ func initEmployeeRepo() {
 }
 
 func OnClose() {
-	Db.Close()
+	if Db != nil {
+		Db.Close()
+	}
 }

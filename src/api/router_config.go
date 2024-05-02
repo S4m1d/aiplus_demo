@@ -1,18 +1,21 @@
 package api
 
 import (
+	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 )
 
-const addr = "localhost:8080"
+const addrTmplt = "localhost:%s"
 
-func ConfigureRoutes() error {
+func ConfigureRoutesAndListen() error {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/employees", HandlePostEmployeesData).Methods("POST")
 
+	addr := fmt.Sprintf(addrTmplt, os.Getenv(httpPortEnv))
 	err := http.ListenAndServe(addr, router)
 	if err != nil {
 		return err

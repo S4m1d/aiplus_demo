@@ -27,10 +27,13 @@ func main() {
 	if err != nil {
 		log.Panic().Err(err).Msg(appLauchErrMsg)
 	}
+	log.Info().Msg("da module initialized")
 	bl.OnInit(log.Logger)
+	log.Info().Msg("bl module initialized")
 	api.OnInit(log.Logger)
+	log.Info().Msg("api module initialized")
 
-	err = api.ConfigureRoutes()
+	err = api.ConfigureRoutesAndListen()
 	if err != nil {
 		log.Panic().Err(err).Msg(appLauchErrMsg)
 	}
